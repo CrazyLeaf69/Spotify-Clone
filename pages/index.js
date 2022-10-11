@@ -1,8 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import Login from "./Login";
-import Dashboard from "./Dashboard";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import Dashboard from "../Components/Dashboard";
+import Login from "../Components/Login";
 
 function App() {
   const [code, setCode] = useState(null);
