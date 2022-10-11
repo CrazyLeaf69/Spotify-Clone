@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from "react";
 
-function callback() {
+const Callback = () => {
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get("code");
     if (code != null) {
@@ -11,7 +11,7 @@ function callback() {
     }
   }, []);
 
-  return <p>redirecting</p>;
-}
+  return <p>Redirecting</p>;
+};
 
-export default callback;
+export default Callback;
