@@ -5,6 +5,7 @@ import { Container, Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import axios from "axios";
 import useAuth from "../Hooks/useAuth";
+import logo from "../public/Spotify_Logo_RGB_Green.png";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -52,13 +53,10 @@ export default function Dashboard({ code }) {
       if (cancel) return;
       setSearchResults(
         res.body.tracks.items.map((track) => {
-          const smallestAlbumImage = track.album.images.reduce(
-            (smallest, image) => {
-              if (image.height < smallest.height) return image;
-              return smallest;
-            },
-            track.album.images[0]
-          );
+          const smallestAlbumImage = track.album.images.reduce((smallest, image) => {
+            if (image.height < smallest.height) return image;
+            return smallest;
+          }, track.album.images[0]);
 
           return {
             artist: track.artists[0].name,
@@ -75,6 +73,9 @@ export default function Dashboard({ code }) {
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
+      <div className="d-flex justify-content-center">
+        <img src={logo.src} style={{ width: "10%", aspectRatio: "2362/709", margin: 5 }} />
+      </div>
       <Form.Control
         type="search"
         placeholder="Search Songs/Artists"
@@ -83,11 +84,7 @@ export default function Dashboard({ code }) {
       />
       <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
         {searchResults.map((track) => (
-          <TrackSearchResult
-            track={track}
-            key={track.uri}
-            chooseTrack={chooseTrack}
-          />
+          <TrackSearchResult track={track} key={track.uri} chooseTrack={chooseTrack} />
         ))}
         {searchResults.length === 0 && (
           <div className="text-center" style={{ whiteSpace: "pre" }}>
@@ -97,6 +94,11 @@ export default function Dashboard({ code }) {
       </div>
       <div>
         <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+        {playingTrack?.uri && (
+          <button type="button" className="btn btn-success mt-2" onClick={() => (window.location = playingTrack?.uri)}>
+            Open on Spotify
+          </button>
+        )}
       </div>
     </Container>
   );

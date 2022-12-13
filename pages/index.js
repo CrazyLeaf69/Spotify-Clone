@@ -13,7 +13,7 @@ function App() {
   return (
     <div>
       <Head>
-        <title>Better Spotify</title>
+        <title>Music & Lyrics</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       {code ? <Dashboard code={code} /> : <Login />};
